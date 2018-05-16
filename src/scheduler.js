@@ -117,13 +117,12 @@ let Calender = (()=>{
 
 		// calculate time every minute and update time element accordingly
 		let showTimer = (node) => {
-			setInterval(()=>{
-				let position = timeTicking();
-				if((position > 0) && (position <= (timePeriod*pixelPerMin))){
-					node.style.top = `${position}px`;
-				}
-				
-			},6000);
+			let position = timeTicking();
+			if((position > 0) && (position <= (timePeriod*pixelPerMin))){
+				node.style.top = `${position}px`;
+			}else{
+				node.style.display = 'none';
+			}
 		}
 
 		//To show time on the calender
@@ -133,9 +132,10 @@ let Calender = (()=>{
 		timeElement.style.height = '2px';
 		timeElement.style.background = 'rgba(255, 0, 0, 0.47)';
 		timeElement.style.border = 'none';
-		timeElement.style.top = `-2px`;
+		
 		app.appendChild(timeElement);
 		showTimer(timeElement);
+		setInterval(showTimer,6000);
 	}
 
 	return{
