@@ -4,7 +4,7 @@
 
 ## How to use
 
-1. Add <div id="calender-wrapper"></div> where ever you want to display the calender.
+1. Add ```<div id="calender-wrapper"></div>``` where ever you want to display the calender.
 2. Pass input to the Calender function
 	For example
 	```
