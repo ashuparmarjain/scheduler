@@ -86,7 +86,7 @@ let Calender = (()=>{
 
 		//Styling calender elements 
 		let style = document.createElement('style');
-		style.innerHTML = '#calender-wrapper{width:700px;margin:0 auto;border:2px solid rgba(0, 0, 0, 0.05);border-radius:8px}#calender-wrapper h2{text-align:center;font-size:2em;text-transform:uppercase}#calender-wrapper ul{width:100px;height:1440px;background-color:#ccc;padding:0;list-style:none;float:left;margin:0}#calender-wrapper ul li{height:120px;text-align:center}#calender-wrapper #calender{display:inline-block;background:rgba(0,0,0,0.04);position:relative;}#calender-wrapper #calender span{border:1px solid rgb(167, 167, 167);box-sizing:border-box;position:absolute;z-index:9;text-align:center';
+		style.innerHTML = '#calender-wrapper{width:700px;margin:0 auto;border:2px solid rgba(0, 0, 0, 0.05);border-radius:8px}#calender-wrapper h2{text-align:center;font-size:2em;text-transform:uppercase}#calender-wrapper ul{width:100px;height:1440px;background-color:#ccc;padding:0;list-style:none;float:left;margin:0}#calender-wrapper ul li{height:120px;text-align:center}#calender-wrapper #calender{display:inline-block;background:rgba(0,0,0,0.04);position:relative;}#calender-wrapper #calender span{border:1px solid rgb(167, 167, 167);box-sizing:border-box;position:absolute;z-index:9;text-align:center}#calender-wrapper #calender span#calender-timebar{animation-name: blink;animation-duration: 1s;animation-iteration-count:infinite;}@keyframes blink{0%{opacity:0}100%{opacity:1}}';
 		appWrapper.appendChild(style);
 
 		//Create events on calender		
@@ -103,6 +103,38 @@ let Calender = (()=>{
 		for(let event of events){
 			createElement(event);
 		}
+
+		//calucalate time as per the calender dimensions
+		let timeTicking = ()=>{
+			const startAt = 9;
+			let time = new Date();
+			let hour = time.getHours();
+			let min = time.getMinutes();
+			let timeRelatedToCal = hour - startAt;
+			if(timeRelatedToCal && timeRelatedToCal <= 21){
+				return (timeRelatedToCal*120)+(min*pixelPerMin);
+			}
+		}
+
+		// calculate time every minute and update time element accordingly
+		let showTimer = (node) => {
+			setInterval(()=>{
+				let position = timeTicking();
+				console.log(position)
+				node.style.top = `${position}px`;
+			},6000);
+		}
+
+		//To show time on the calender
+		let timeElement = document.createElement('span');
+		timeElement.setAttribute('id','calender-timebar');
+		timeElement.style.width = `${calenderWidth}px`;
+		timeElement.style.height = '2px';
+		timeElement.style.background = 'rgba(255, 0, 0, 0.47)';
+		timeElement.style.border = 'none';
+		timeElement.style.top = `${timeTicking()}px`;
+		app.appendChild(timeElement);
+		showTimer(timeElement);
 	}
 
 	return{
