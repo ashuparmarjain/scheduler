@@ -1,6 +1,6 @@
-#Scheduler.js
+# Scheduler.js
 
-** Scheduler is written using pure javascript to display the list of events for the particular day **
+**Scheduler is written using pure javascript to display the list of events for the particular day**
 
 ## How to use
 
