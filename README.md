@@ -15,3 +15,5 @@
 			Calender.Render(meetings);		
 		})();
 	```
+	
+demo link : https://ck12-scheduler.herokuapp.com/index.html
