@@ -119,6 +119,7 @@ let Calender = (()=>{
 
 		// calculate time every minute and update time element accordingly
 		let showTimer = (node) => {
+			node = document.getElementById('calender-timebar');
 			let position = timeTicking();
 			if((position > 0) && (position <= (timePeriod*pixelPerMin))){
 				node.style.top = `${position}px`;
@@ -136,7 +137,7 @@ let Calender = (()=>{
 		timeElement.style.border = 'none';
 		
 		app.appendChild(timeElement);
-		showTimer(timeElement);
+		showTimer('calender-timebar');
 		setInterval(showTimer,6000);
 	}
 
