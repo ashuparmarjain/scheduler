@@ -7,15 +7,17 @@ let Calender = (()=>{
 
 	// Function to group events which intersect with eachother by adding  property which will have same value to all the events which intersect with eachother.
 	let groupInstersectedEvents = (event,meetings)=>{
-		return meetings.filter((meeting)=>{
-			if((meeting.start >= event.start && meeting.start <= event.end) && (event.id != meeting.id)){
-				if(event.stack){
+		meetings.filter((meeting)=>{
+			if(((event.start >= meeting.start) && (event.start <= meeting.end)) || ((event.end >= meeting.start) && (event.end <= meeting.end)) && (event.id != meeting.id)){
+				if(event.stack && !meeting.stack){
 					meeting.stack = event.stack;
-				} else{
+				} else if(meeting.stack){
+					event.stack = meeting.stack;
+				}	 else {
 					event.stack = event.id;
 					eventStackId.push(event.stack);
 					meeting.stack = event.stack;
-				}	
+				}
 				return true;
 			}
 		});	
@@ -61,7 +63,7 @@ let Calender = (()=>{
 		for(let i=0;i<meetings.length;i++){
 			groupInstersectedEvents(meetings[i],meetings);
 		}
-		setCSSProps(meetings);	
+		setCSSProps(meetings);
 		return meetings;	
 	}
 
@@ -140,7 +142,6 @@ let Calender = (()=>{
 
 	return{
 		Scheduler:(meetings)=>{
-			  meetings.sort(function(a,b) {return (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0);});
 			  return Scheduler(meetings);
 		},
 		Render:(meetings)=>{
